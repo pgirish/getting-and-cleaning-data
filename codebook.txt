@@ -1,59 +1,43 @@
-Feature Selection 
-=================
 
-The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+Codebook:
+This code book will describe the data used in this project, as well as the processing required to create the resulting tidy data set.
 
-Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+For the provided UCI HAR Dataset the following vars are set from run_analysis.R. See the README for additional details.
 
-Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+Source data is from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip.
 
-These signals were used to estimate variables of the feature vector for each pattern:  
-'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+Explanation of each file
 
-tBodyAcc-XYZ
-tGravityAcc-XYZ
-tBodyAccJerk-XYZ
-tBodyGyro-XYZ
-tBodyGyroJerk-XYZ
-tBodyAccMag
-tGravityAccMag
-tBodyAccJerkMag
-tBodyGyroMag
-tBodyGyroJerkMag
-fBodyAcc-XYZ
-fBodyAccJerk-XYZ
-fBodyGyro-XYZ
-fBodyAccMag
-fBodyAccJerkMag
-fBodyGyroMag
-fBodyGyroJerkMag
+features.txt: Names of the 561 features.
+activity_labels.txt: Names and IDs for each of the 6 activities.
 
-The set of variables that were estimated from these signals are: 
+X_train.txt: 7352 observations of the 561 features, for 21 of the 30 volunteers.
 
-mean(): Mean value
-std(): Standard deviation
-mad(): Median absolute deviation 
-max(): Largest value in array
-min(): Smallest value in array
-sma(): Signal magnitude area
-energy(): Energy measure. Sum of the squares divided by the number of values. 
-iqr(): Interquartile range 
-entropy(): Signal entropy
-arCoeff(): Autorregresion coefficients with Burg order equal to 4
-correlation(): correlation coefficient between two signals
-maxInds(): index of the frequency component with largest magnitude
-meanFreq(): Weighted average of the frequency components to obtain a mean frequency
-skewness(): skewness of the frequency domain signal 
-kurtosis(): kurtosis of the frequency domain signal 
-bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
-angle(): Angle between to vectors.
+subject_train.txt: A vector of 7352 integers, denoting the ID of the volunteer related to each of the observations in X_train.txt.
+y_train.txt: A vector of 7352 integers, denoting the ID of the activity related to each of the observations in X_train.txt.
 
-Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+X_test.txt: 2947 observations of the 561 features, for 9 of the 30 volunteers.
 
-gravityMean
-tBodyAccMean
-tBodyAccJerkMean
-tBodyGyroMean
-tBodyGyroJerkMean
+subject_test.txt: A vector of 2947 integers, denoting the ID of the volunteer related to each of the observations in X_test.txt.
+y_test.txt: A vector of 2947 integers, denoting the ID of the activity related to each of the observations in X_test.txt.
+More information about the files is available in README.txt. More information about the features is available in features_info.txt.
 
-The complete list of variables of each feature vector is available in 'features.txt'
+
+By examining extractedData, we can say that the following acronyms can be replaced:
+
+Acc can be replaced with Accelerometer
+
+Gyro can be replaced with Gyroscope
+
+BodyBody can be replaced with Body
+
+Mag can be replaced with Magnitude
+
+Character f can be replaced with Frequency
+
+Character t can be replaced with Time
+
+Processing steps
+
+All of the relevant data files were read into data frames, appropriate column headers were added, and the training and test sets were combined into a single data set.
+All feature columns were removed that did not contain the exact string "mean()" or "std()". A tidy data set was created containing the mean of each feature for each subject and each activity. The tidy data set was output to a text file.
